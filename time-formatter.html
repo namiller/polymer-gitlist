@@ -1,0 +1,35 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<dom-module id="time-formatter">
+  <template>
+    <style>
+    </style>
+    {{formatted}}
+  </template>
+  <script>
+    Polymer({
+      is: 'time-formatter',
+
+      properties: {
+        date: {
+          type: String,
+          value: "",
+          reflect: true,
+        },
+        formatted: {
+          type: String,
+          value: "",
+        }
+      },
+
+      observers: [
+        '_dateChanged(date)'
+      ],
+
+      _dateChanged: function(newDate) {
+        var d = new Date(newDate);
+        this.set('formatted', d.toLocaleDateString());
+      },
+    });
+  </script>
+</dom-module>
