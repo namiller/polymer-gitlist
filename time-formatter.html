@@ -1,4 +1,4 @@
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="bower_components/polymer/polymer-element.html">
 
 <dom-module id="time-formatter">
   <template>
@@ -7,29 +7,26 @@
     {{formatted}}
   </template>
   <script>
-    Polymer({
-      is: 'time-formatter',
-
-      properties: {
-        date: {
-          type: String,
-          value: "",
-          reflect: true,
-        },
-        formatted: {
-          type: String,
-          value: "",
-        }
-      },
-
-      observers: [
-        '_dateChanged(date)'
-      ],
-
-      _dateChanged: function(newDate) {
-        var d = new Date(newDate);
-        this.set('formatted', d.toLocaleDateString());
-      },
-    });
+		class TimeFormatter extends Polymer.Element {
+			static get is() {return 'time-formatter';}
+			static get properties() {
+				return {
+					date: {
+						type: String,
+						value: "",
+						observer: '_dateChanged',
+					},
+					formatted: {
+						type: String,
+						value: "",
+					}
+				}
+			}
+			_dateChanged(newDate, oldDate) {
+				var d = new Date(newDate);
+				this.set('formatted', d.toLocaleDateString());
+			}
+		}
+	customElements.define(TimeFormatter.is, TimeFormatter);
   </script>
 </dom-module>

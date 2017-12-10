@@ -1,7 +1,7 @@
-<link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="bower_components/polymer/polymer-element.html">
+<link rel="import" href="bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="bower_components/paper-card/paper-card.html">
 <link rel="import" href="git-elem.html">
-<link rel="import" href="../paper-card/paper-card.html">
 <dom-module id="git-list">
   <template>
     <style>
@@ -25,53 +25,55 @@
       url="{{link}}"
       method="GET"
       handle-as="json" 
-      on-response="_apiResponse">
+      on-response="apiResponse">
     </iron-ajax>
 
   </template>
 
   <script>
-    Polymer({
-      is: 'git-list',
+		class GitList extends Polymer.Element {
+			static get is() { return 'git-list'; }
 
-      properties: {
-        baseUrl: {
-          type: String,
-          value: 'https://api.github.com/users/',
-          observer: '_fixLink',
-        },
+			static get properties() {
+				return	{
+					baseUrl: {
+						type: String,
+						value: 'https://api.github.com/users/',
+						observer: 'fixLink',
+					},
 
-        user: {
-          type: String,
-          value: 'Polymer',
-          observer: '_fixLink',
-        },
+					user: {
+						type: String,
+						value: 'Polymer',
+						observer: 'fixLink',
+					},
 
-        repos: {
-          type: Array,
-          value: [],
-          reflect: true,
-        },
+					repos: {
+						type: Array,
+						value: [],
+						reflect: true,
+					},
 
-        link: {
-          type: String,
-          value: '',
-          reflect: true,
-        },
-      },
+					link: {
+						type: String,
+						value: '',
+						reflect: true,
+					},
+				}
+			}
 
-      _apiResponse: function(event, data) {
+      apiResponse(event, data) {
         this.set('repos', data.xhr.response);
-      },
+      }
 
-      _fixLink: function() {
+      fixLink() {
         var url = this.get('baseUrl');
         var user = this.get('user');
         if (url && user) {
           this.set('link', url + user + '/repos');
         }
-      },
-
-    });
+      }
+    }
+customElements.define(GitList.is, GitList);
   </script>
 </dom-module>

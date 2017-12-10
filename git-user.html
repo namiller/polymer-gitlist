@@ -1,4 +1,4 @@
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="bower_components/polymer/polymer-element.html">
 
 <dom-module id="git-user">
   <template>
@@ -36,16 +36,19 @@
     </a>
   </template>
   <script>
-    Polymer({
-      is: 'git-user',
+		class GitUser extends Polymer.Element {
+			static get is() { return 'git-user'; }
 
-      properties: {
-        user: {
-          type: Object,
-          value: {},
-          reflect: true,
-        },
-      },
-    });
+			static get properties() {
+				return {
+					user: {
+						type: Object,
+						value: {},
+						reflect: true,
+					},
+				}
+			}
+    }
+customElements.define(GitUser.is, GitUser);
   </script>
 </dom-module>
